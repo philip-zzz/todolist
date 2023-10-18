@@ -1,0 +1,26 @@
+<%- include("header") -%>
+
+  <div class="box" id="heading">
+    <h1> <%= listTitle %> </h1>
+  </div>
+
+  <div class="box">    
+    <% newListItems.forEach((each_item)=>{ %>
+      <form action="/delete" method="post">
+      <%# form can have an action and method set as post, so when the box is checked, it will send message to the js file as req.body, we need to give it a name so the req.body info can be logged; the onChange is a way so that whenever the box is checked, it will submit the info, instead of having to have a seperate button for submission %>
+        <div class="item">
+          <input type="checkbox" name="check" value="<%= each_item._id %>" onChange="this.form.submit()">
+          <p><%=  each_item.name  %></p>
+          <input type="hidden" name="listName" value="<%= listTitle %>">
+        </div>
+      </form>
+    <% }) %>
+
+      <form class="item" action="/" method="post">
+        <input type="text" name="newItem" placeholder="New Item" autocomplete="off">
+        <button type="submit" name="list" value="<%= listTitle %>">+</button>
+        <%# give this button a value and a name, so in js file, the req.body.list will be the listTitle, then we will know which list we should send the new task to, 因为listTitle是当前页面custom list的title%>
+      </form>
+  </div>
+
+<%- include("footer") -%>
